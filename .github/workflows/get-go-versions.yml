@@ -1,7 +1,5 @@
 name: Get Go versions
 on:
-  schedule:
-    - cron: '0 3,15 * * *'
   workflow_dispatch:
 
 jobs:
