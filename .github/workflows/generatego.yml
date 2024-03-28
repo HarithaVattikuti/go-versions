@@ -22,7 +22,7 @@ on:
 
 jobs:
   node:
-    name: Node
+    name: Go
     uses: HarithaVattikuti/versions-package-tools/.github/workflows/build-tool-packages.yml@main
     with:
       tool-name: "go"
