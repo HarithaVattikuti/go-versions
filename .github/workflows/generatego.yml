@@ -23,7 +23,7 @@ on:
 jobs:
   node:
     name: Go
-    uses: HarithaVattikuti/versions-package-tools/.github/workflows/build-tool-packages.yml@main
+    uses: HarithaVattikuti/versions-package-tools/.github/workflows/build-tool-packages.yml@testnewversion
     with:
       tool-name: "go"
       tool-version: ${{ inputs.VERSION || '1.21.8' }}
