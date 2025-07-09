@@ -39,7 +39,7 @@ Describe "Go" {
             }
         
             # Resolve the logs folder path
-            $logsFolderPath = Join-Path -Path $homeDir -ChildPath "actions-runner/cached" -Resolve
+            $logsFolderPath = Join-Path -Path $homeDir -ChildPath "actions-runner/cached/_diag/pages" -Resolve
         
             Write-Host "Logs folder path: $logsFolderPath"
 
