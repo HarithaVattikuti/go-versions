@@ -48,9 +48,15 @@ Describe "Go" {
                 throw "The logs folder path '$logsFolderPath' does not exist."
             }
 
+                # Debugging: List directory contents
+            Write-Host "Contents of ${logsFolderPath}:"
+            Get-ChildItem -Path $logsFolderPath
+
+
             # Get the log file
             $useGoLogFile = Get-ChildItem -Path $logsFolderPath -File | Where-Object {
                 $logContent = Get-Content $_.Fullname -Raw
+                Write-Host "Checking file: $($_.FullName)"
                 return $logContent -match "setup-go@v"
             } | Select-Object -First 1
         
