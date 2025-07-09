@@ -9,24 +9,59 @@ Describe "Go" {
 
     function Get-UseGoLogs {
         # GitHub Windows images don't have `HOME` variable
-        $homeDir = $env:HOME ?? $env:HOMEDRIVE
-        #$logsFolderPath = Join-Path -Path $homeDir -ChildPath "runners/*/_diag/pages" -Resolve
-        $logsFolderPath = Join-Path -Path $homeDir -ChildPath "actions-runner/cached" -Resolve
-        # $possiblePaths = @(
-        #     Join-Path -Path $homeDir -ChildPath "actions-runner/cached"
-        #     Join-Path -Path $homeDir -ChildPath "runners/*/_diag/pages"
-        # )
-        # $logsFolderPath = $possiblePaths | Where-Object { Test-Path $_ } | Select-Object -First 1
+        # $homeDir = $env:HOME ?? $env:HOMEDRIVE
+        # #$logsFolderPath = Join-Path -Path $homeDir -ChildPath "runners/*/_diag/pages" -Resolve
+        # $logsFolderPath = Join-Path -Path $homeDir -ChildPath "actions-runner/cached" -Resolve
+        # # $possiblePaths = @(
+        # #     Join-Path -Path $homeDir -ChildPath "actions-runner/cached"
+        # #     Join-Path -Path $homeDir -ChildPath "runners/*/_diag/pages"
+        # # )
+        # # $logsFolderPath = $possiblePaths | Where-Object { Test-Path $_ } | Select-Object -First 1
 
-        # if (-not $logsFolderPath) {
-        #     throw "No valid logs folder found in expected locations."
-        # }
+        # # if (-not $logsFolderPath) {
+        # #     throw "No valid logs folder found in expected locations."
+        # # }
 
-        $useGoLogFile = Get-ChildItem -Path $logsFolderPath -File | Where-Object {
-            $logContent = Get-Content $_.Fullname -Raw
-            return $logContent -match "setup-go@v"
-        } | Select-Object -First 1
-        return $useGoLogFile.Fullname
+        # $useGoLogFile = Get-ChildItem -Path $logsFolderPath -File | Where-Object {
+        #     $logContent = Get-Content $_.Fullname -Raw
+        #     return $logContent -match "setup-go@v"
+        # } | Select-Object -First 1
+        # return $useGoLogFile.Fullname
+
+        function Get-UseGoLogs {
+            # GitHub Windows images don't have `HOME` variable
+            $homeDir = $env:HOME ?? $env:HOMEDRIVE
+        
+            Write-Host "HOME directory: $homeDir"
+            
+            # Validate $homeDir
+            if (-not $homeDir) {
+                throw "HOME or HOMEDRIVE environment variable is not set."
+            }
+        
+            # Resolve the logs folder path
+            $logsFolderPath = Join-Path -Path $homeDir -ChildPath "actions-runner/cached" -Resolve
+        
+            Write-Host "Logs folder path: $logsFolderPath"
+
+            # Validate $logsFolderPath
+            if (-not (Test-Path $logsFolderPath)) {
+                throw "The logs folder path '$logsFolderPath' does not exist."
+            }
+
+            # Get the log file
+            $useGoLogFile = Get-ChildItem -Path $logsFolderPath -File | Where-Object {
+                $logContent = Get-Content $_.Fullname -Raw
+                return $logContent -match "setup-go@v"
+            } | Select-Object -First 1
+        
+            # Validate $useGoLogFile
+            if (-not $useGoLogFile) {
+                throw "No log file matching 'setup-go@v' was found in '$logsFolderPath'."
+            }
+        
+            return $useGoLogFile.Fullname
+        }
     }
 }
 
