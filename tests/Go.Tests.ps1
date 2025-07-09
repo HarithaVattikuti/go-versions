@@ -28,12 +28,11 @@ Describe "Go" {
         # } | Select-Object -First 1
         # return $useGoLogFile.Fullname
 
-        function Get-UseGoLogs {
             # GitHub Windows images don't have `HOME` variable
             $homeDir = $env:HOME ?? $env:HOMEDRIVE
         
             Write-Host "HOME directory: $homeDir"
-            
+
             # Validate $homeDir
             if (-not $homeDir) {
                 throw "HOME or HOMEDRIVE environment variable is not set."
@@ -61,7 +60,7 @@ Describe "Go" {
             }
         
             return $useGoLogFile.Fullname
-        }
+        
     }
 }
 
