@@ -21,7 +21,7 @@ Describe "Go" {
             throw "No valid logs folder found in expected locations."
         }
 
-        $useGoLogFile = Get-ChildItem -Path $logsFolderPath | Where-Object {
+        $useGoLogFile = Get-ChildItem -Path $logsFolderPath -File | Where-Object {
             $logContent = Get-Content $_.Fullname -Raw
             return $logContent -match "setup-go@v"
         } | Select-Object -First 1
