@@ -11,17 +11,18 @@ Describe "Go" {
         # GitHub Windows images don't have `HOME` variable
         $homeDir = $env:HOME ?? $env:HOMEDRIVE
         #$logsFolderPath = Join-Path -Path $homeDir -ChildPath "runners/*/_diag/pages" -Resolve
-        $possiblePaths = @(
-            Join-Path -Path $homeDir -ChildPath "actions-runner/cached"
-            Join-Path -Path $homeDir -ChildPath "runners/*/_diag/pages"
-        )
-        $logsFolderPath = $possiblePaths | Where-Object { Test-Path $_ } | Select-Object -First 1
+        $logsFolderPath = Join-Path -Path $homeDir -ChildPath "actions-runner/cached" -Resolve
+        # $possiblePaths = @(
+        #     Join-Path -Path $homeDir -ChildPath "actions-runner/cached"
+        #     Join-Path -Path $homeDir -ChildPath "runners/*/_diag/pages"
+        # )
+        # $logsFolderPath = $possiblePaths | Where-Object { Test-Path $_ } | Select-Object -First 1
 
-        if (-not $logsFolderPath) {
-            throw "No valid logs folder found in expected locations."
-        }
+        # if (-not $logsFolderPath) {
+        #     throw "No valid logs folder found in expected locations."
+        # }
 
-        $useGoLogFile = Get-ChildItem -Path $logsFolderPath -File | Where-Object {
+        $useGoLogFile = Get-ChildItem -Path $logsFolderPath | Where-Object {
             $logContent = Get-Content $_.Fullname -Raw
             return $logContent -match "setup-go@v"
         } | Select-Object -First 1
