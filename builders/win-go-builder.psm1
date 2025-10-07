@@ -55,6 +55,8 @@ class WinGoBuilder : GoBuilder {
         $variablesToReplace.keys | ForEach-Object { $installationTemplateContent = $installationTemplateContent.Replace($_, $variablesToReplace[$_]) }
         $installationTemplateContent | Out-File -FilePath $installationScriptLocation
         Write-Debug "Done; Installation script location: $installationScriptLocation)"
+        Write-Host "Done; Installation script location: $installationScriptLocation)"
+
     }
 
     [void] ArchiveArtifact() {

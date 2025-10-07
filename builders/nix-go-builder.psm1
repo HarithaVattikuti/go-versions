@@ -48,6 +48,8 @@ class NixGoBuilder : GoBuilder {
         $installationTemplateContent | Out-File -FilePath $installationScriptLocation
 
         Write-Debug "Done; Installation script location: $installationScriptLocation)"
+        Write-Host "Done; Installation script location: $installationScriptLocation)"
+
     }
 
     [void] ArchiveArtifact() {

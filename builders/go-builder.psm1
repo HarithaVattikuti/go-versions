@@ -80,6 +80,8 @@ class GoBuilder {
         $targetFilepath = Join-Path -Path $this.TempFolderLocation -ChildPath $targetFilename
 
         Write-Debug "Download binaries from $binariesUri to $targetFilepath"
+        Write-Host "Download binaries from $binariesUri to $targetFilepath"
+
         try {
             (New-Object System.Net.WebClient).DownloadFile($binariesUri, $targetFilepath)
         } catch {
@@ -88,6 +90,7 @@ class GoBuilder {
         }
 
         Write-Debug "Done; Binaries location: $targetFilepath"
+        Write-Host "Done; Binaries location: $targetFilepath"
         return $targetFilepath
     }
 
